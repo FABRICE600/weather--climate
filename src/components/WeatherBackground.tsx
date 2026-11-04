@@ -19,8 +19,9 @@ export default function WeatherBackground({ scene }: WeatherBackgroundProps) {
         top: Math.random() * 70,
         size: Math.random() * 2 + 1,
         delay: Math.random() * 3,
+        opacity: 0.4 + Math.random() * 0.5,
       })),
-    [scene.id]
+    []
   );
 
   const raindrops = useMemo(
@@ -32,7 +33,7 @@ export default function WeatherBackground({ scene }: WeatherBackgroundProps) {
         duration: 0.5 + Math.random() * 0.6,
         opacity: 0.3 + Math.random() * 0.4,
       })),
-    [scene.id]
+    []
   );
 
   const snowflakes = useMemo(
@@ -44,7 +45,7 @@ export default function WeatherBackground({ scene }: WeatherBackgroundProps) {
         duration: 4 + Math.random() * 4,
         size: 2 + Math.random() * 4,
       })),
-    [scene.id]
+    []
   );
 
   return (
@@ -82,7 +83,7 @@ export default function WeatherBackground({ scene }: WeatherBackgroundProps) {
                 top: `${s.top}%`,
                 width: `${s.size}px`,
                 height: `${s.size}px`,
-                opacity: 0.4 + Math.random() * 0.5,
+                opacity: s.opacity,
                 animation: `twinkle 3s ease-in-out ${s.delay}s infinite`,
               }}
             />
