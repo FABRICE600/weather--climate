@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Weather background animations ===== */
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 0.9; transform: scale(1.2); }
+}
+
+@keyframes rainfall {
+  0% { transform: translateY(-60px); }
+  100% { transform: translateY(110vh); }
+}
+
+@keyframes snowfall {
+  0% { transform: translateY(-20px) translateX(0); }
+  50% { transform: translateY(50vh) translateX(20px); }
+  100% { transform: translateY(110vh) translateX(-10px); }
+}
+
+@keyframes lightning {
+  0%, 90%, 100% { opacity: 0; }
+  92% { opacity: 0.6; }
+  93% { opacity: 0.1; }
+  94% { opacity: 0.5; }
+  95% { opacity: 0; }
+}
+
+/* ===== Alert banner slide-in ===== */
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-down {
+  animation: slideDown 0.3s ease-out;
+}

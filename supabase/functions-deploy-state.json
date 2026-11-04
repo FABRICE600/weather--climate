@@ -1,0 +1,9 @@
+{
+  "projectId": "72660738",
+  "functions": {
+    "weather-proxy": {
+      "hasChanged": false,
+      "hash": "7006fcd1a3996815bec4586dd45ed2aa50b00600aea6d2cb2976502b766fcd26"
+    }
+  }
+}
