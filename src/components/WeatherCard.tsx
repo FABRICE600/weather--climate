@@ -15,7 +15,7 @@ interface WeatherCardProps {
   data: CurrentWeather;
   hourly: HourlyPoint[];
   isFavorite: boolean;
-  onToggleFavorite: () => void;
+  onToggleFavorite?: () => void;
   unit: TempUnit;
   alerts: WeatherAlert[];
 }
@@ -110,6 +110,7 @@ export default function WeatherCard({
       )}
 
       {/* Favorite button (top-right) */}
+      {onToggleFavorite && (
       <div className="flex justify-end">
         <button
           type="button"
@@ -129,6 +130,7 @@ export default function WeatherCard({
           {isFavorite ? "Favorited" : "Add to favorites"}
         </button>
       </div>
+      )}
 
       {/* Header: location + big icon */}
       <div className="-mt-2 flex flex-col items-center gap-3 text-center">
