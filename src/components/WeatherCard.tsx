@@ -8,7 +8,7 @@ import {
   Wind,
 } from "lucide-react";
 import type { CurrentWeather, HourlyPoint, WeatherAlert } from "@/lib/types";
-import { formatTemp, type TempUnit } from "@/lib/units";
+import { formatTemp, windLabel, windValue, type TempUnit, type WindUnit } from "@/lib/units";
 import HourlyChart from "./HourlyChart";
 
 interface WeatherCardProps {
@@ -17,6 +17,7 @@ interface WeatherCardProps {
   isFavorite: boolean;
   onToggleFavorite?: () => void;
   unit: TempUnit;
+  windUnit: WindUnit;
   alerts: WeatherAlert[];
 }
 
@@ -170,7 +171,7 @@ export default function WeatherCard({
         <Stat
           icon={<Wind className="h-5 w-5" />}
           label="Wind"
-          value={`${data.windSpeed} km/h`}
+          value={`${windValue(data.windSpeed, windUnit)} ${windLabel(windUnit)}`}
         />
         <Stat
           icon={<Gauge className="h-5 w-5" />}

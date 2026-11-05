@@ -24,9 +24,18 @@ export default function SiteNav() {
         </Link>
 
         <div className="flex items-center gap-2 text-sm">
+          <Link to="/rwanda" className="rounded-full px-4 py-2 font-medium text-white/80 transition hover:text-white">
+            Rwanda
+          </Link>
           {!loading && user && (
             <>
-              <span className="hidden max-w-[12rem] truncate text-white/60 sm:inline">{user.email}</span>
+              <Link to="/profile" className="hidden rounded-full px-4 py-2 font-medium text-white/80 transition hover:text-white sm:inline">
+                Profile
+              </Link>
+              <Link to="/settings" className="hidden rounded-full px-4 py-2 font-medium text-white/80 transition hover:text-white sm:inline">
+                Settings
+              </Link>
+              <span className="hidden max-w-[12rem] truncate text-white/60 md:inline">{user.email}</span>
               <button
                 type="button"
                 onClick={handleSignOut}

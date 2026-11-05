@@ -10,12 +10,12 @@ import SearchHistory from "@/components/SearchHistory";
 import FavoritesBar from "@/components/FavoritesBar";
 import DistrictsSelector from "@/components/DistrictsSelector";
 import { useAuth } from "@/context/AuthContext";
+import { usePreferences } from "@/context/PreferencesContext";
 import { fetchWeather } from "@/lib/weather";
 import { saveSearch, loadHistory, clearHistory, deleteSearch } from "@/lib/history";
 import { addFavorite, removeFavorite, loadFavorites } from "@/lib/favorites";
 import { getWeatherAlerts } from "@/lib/alerts";
 import { getWeatherScene, DEFAULT_SCENE } from "@/lib/weatherScene";
-import type { TempUnit } from "@/lib/units";
 import type { CurrentWeather, DailyPoint, FavoriteEntry, HourlyPoint, SearchHistoryEntry } from "@/lib/types";
 
 const messageOf = (err: unknown) =>
@@ -35,7 +35,7 @@ export default function Home() {
   const [history, setHistory] = useState<SearchHistoryEntry[]>([]);
   const [favorites, setFavorites] = useState<FavoriteEntry[]>([]);
 
-  const [unit, setUnit] = useState<TempUnit>("C");
+  const { unit, windUnit, setUnit } = usePreferences();
   const [darkMode, setDarkMode] = useState(false);
 
   // Private data is only readable while signed in, so load it per user and clear it on sign-out.
@@ -173,7 +173,8 @@ export default function Home() {
           isDark={darkMode}
           onToggleDark={() => setDarkMode((v) => !v)}
           unit={unit}
-          onToggleUnit={() => setUnit((u) => (u === "C" ? "F" : "C"))}
+          onToggleUnit={() => void setUnit(unit === "C" ? "F" : "C").catch((err: unknown) => console.warn(err))}
+          windUnit={windUnit}
         />
 
         <div className="w-full">
@@ -227,7 +228,7 @@ export default function Home() {
                 unit={unit}
                 alerts={alerts}
               />
-              {daily.length > 0 && <Forecast days={daily} unit={unit} />}
+              {daily.length > 0 && <Forecast days={daily} unit={unit} windUnit={windUnit} />}
             </>
           )}
 

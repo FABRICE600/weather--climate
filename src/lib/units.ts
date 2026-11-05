@@ -23,3 +23,18 @@ export function tempValue(celsius: number, unit: TempUnit): number {
 export function unitLabel(unit: TempUnit): string {
   return unit === "F" ? "°F" : "°C";
 }
+
+export type WindUnit = "kmh" | "mph" | "ms";
+
+// The backend returns wind speed in km/h.
+export function windValue(kmh: number, unit: WindUnit): number {
+  if (unit === "mph") return Math.round(kmh * 0.621371);
+  if (unit === "ms") return Math.round((kmh / 3.6) * 10) / 10;
+  return Math.round(kmh);
+}
+
+export function windLabel(unit: WindUnit): string {
+  if (unit === "mph") return "mph";
+  if (unit === "ms") return "m/s";
+  return "km/h";
+}

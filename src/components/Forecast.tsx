@@ -1,13 +1,14 @@
 import { Droplets, Wind } from "lucide-react";
 import type { DailyPoint } from "@/lib/types";
-import { tempValue, type TempUnit } from "@/lib/units";
+import { tempValue, windLabel, windValue, type TempUnit, type WindUnit } from "@/lib/units";
 
 interface ForecastProps {
   days: DailyPoint[];
   unit: TempUnit;
+  windUnit: WindUnit;
 }
 
-export default function Forecast({ days, unit }: ForecastProps) {
+export default function Forecast({ days, unit, windUnit }: ForecastProps) {
   if (days.length === 0) return null;
 
   const weekMin = Math.min(...days.map((d) => tempValue(d.tempMin, unit)));
@@ -58,7 +59,7 @@ export default function Forecast({ days, unit }: ForecastProps) {
               </span>
               <span className="hidden items-center gap-1 text-xs text-white/40 lg:flex">
                 <Wind className="h-3 w-3" />
-                {d.windSpeed}
+                {windValue(d.windSpeed, windUnit)} {windLabel(windUnit)}
               </span>
 
               {/* Temp range bar */}
