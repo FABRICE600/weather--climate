@@ -1,0 +1,11 @@
+create table if not exists public.saved_locations (
+  id uuid primary key default gen_random_uuid(), user_id uuid not null references auth.users(id) on delete cascade,
+  name text not null, latitude double precision, longitude double precision, created_at timestamptz not null default now(),
+  unique (user_id, name)
+);
+create table if not exists public.favourite_locations (like public.saved_locations including defaults);
+create table if not exists public.alerts (id uuid primary key default gen_random_uuid(), user_id uuid not null references auth.users(id) on delete cascade, title text not null, message text not null, severity text not null default 'info', read_at timestamptz, created_at timestamptz not null default now());
+create table if not exists public.notifications (id uuid primary key default gen_random_uuid(), user_id uuid not null references auth.users(id) on delete cascade, title text not null, message text not null, read_at timestamptz, created_at timestamptz not null default now());
+create table if not exists public.user_preferences (user_id uuid primary key references auth.users(id) on delete cascade, temperature_unit text not null default 'C' check (temperature_unit in ('C','F')), wind_unit text not null default 'kmh', created_at timestamptz not null default now(), updated_at timestamptz not null default now());
+
+do $$ declare t text; begin foreach t in array array['saved_locations','favourite_locations','alerts','notifications','user_preferences'] loop execute format('alter table public.%I enable row level security', t); execute format('drop policy if exists own_select on public.%I', t); execute format('create policy own_select on public.%I for select to authenticated using (auth.uid() = user_id)', t); execute format('drop policy if exists own_insert on public.%I', t); execute format('create policy own_insert on public.%I for insert to authenticated with check (auth.uid() = user_id)', t); execute format('drop policy if exists own_update on public.%I', t); execute format('create policy own_update on public.%I for update to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id)', t); execute format('drop policy if exists own_delete on public.%I', t); execute format('create policy own_delete on public.%I for delete to authenticated using (auth.uid() = user_id)', t); end loop; end $$;
