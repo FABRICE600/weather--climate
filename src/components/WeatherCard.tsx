@@ -8,15 +8,16 @@ import {
   Wind,
 } from "lucide-react";
 import type { CurrentWeather, HourlyPoint, WeatherAlert } from "@/lib/types";
-import { formatTemp, type TempUnit } from "@/lib/units";
+import { formatTemp, windLabel, windValue, type TempUnit, type WindUnit } from "@/lib/units";
 import HourlyChart from "./HourlyChart";
 
 interface WeatherCardProps {
   data: CurrentWeather;
   hourly: HourlyPoint[];
   isFavorite: boolean;
-  onToggleFavorite: () => void;
+  onToggleFavorite?: () => void;
   unit: TempUnit;
+  windUnit: WindUnit;
   alerts: WeatherAlert[];
 }
 
@@ -110,6 +111,7 @@ export default function WeatherCard({
       )}
 
       {/* Favorite button (top-right) */}
+      {onToggleFavorite && (
       <div className="flex justify-end">
         <button
           type="button"
@@ -129,6 +131,7 @@ export default function WeatherCard({
           {isFavorite ? "Favorited" : "Add to favorites"}
         </button>
       </div>
+      )}
 
       {/* Header: location + big icon */}
       <div className="-mt-2 flex flex-col items-center gap-3 text-center">
@@ -168,7 +171,7 @@ export default function WeatherCard({
         <Stat
           icon={<Wind className="h-5 w-5" />}
           label="Wind"
-          value={`${data.windSpeed} km/h`}
+          value={`${windValue(data.windSpeed, windUnit)} ${windLabel(windUnit)}`}
         />
         <Stat
           icon={<Gauge className="h-5 w-5" />}

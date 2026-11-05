@@ -72,6 +72,8 @@ export interface FavoriteEntry {
 export interface District {
   name: string;
   province: string;
+  lat: number;
+  lon: number;
 }
 
 export type AlertSeverity = "warning" | "watch" | "advisory";
