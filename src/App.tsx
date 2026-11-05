@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { AlertCircle, Loader2 } from "lucide-react";
+import { AlertCircle, CloudSun, Loader2, MapPinned, ShieldCheck } from "lucide-react";
 import HeaderControls from "@/components/HeaderControls";
 import WeatherBackground from "@/components/WeatherBackground";
 import SearchBar from "@/components/SearchBar";
@@ -163,20 +163,40 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen overflow-hidden text-white">
-      {/* Animated weather-condition background */}
       <WeatherBackground scene={scene} />
 
-      <main className="relative z-10 mx-auto flex min-h-screen max-w-2xl flex-col items-center px-4 py-10 sm:py-14">
-        {/* Header with dark mode + unit toggles */}
-        <HeaderControls
-          isDark={darkMode}
-          onToggleDark={() => setDarkMode((v) => !v)}
-          unit={unit}
-          onToggleUnit={() => setUnit((u) => (u === "C" ? "F" : "C"))}
-        />
+      <main className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-5 sm:px-6 sm:py-8">
+        <header className="mb-8 flex flex-col gap-6 rounded-[2rem] border border-white/15 bg-slate-950/30 p-5 shadow-2xl backdrop-blur-xl sm:p-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex size-11 items-center justify-center rounded-2xl bg-cyan-400/15 text-cyan-200 ring-1 ring-cyan-300/20">
+              <CloudSun className="size-6" aria-hidden="true" />
+            </div>
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-cyan-200/70">Atmosphere</p>
+              <h1 className="text-xl font-semibold tracking-tight text-white">Global Weather Intelligence</h1>
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center gap-2 text-xs text-white/65">
+            <span className="flex items-center gap-1.5 rounded-full border border-emerald-300/20 bg-emerald-300/10 px-3 py-1.5 text-emerald-100"><ShieldCheck className="size-3.5" aria-hidden="true" /> Live data</span>
+            <span className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5"><MapPinned className="size-3.5" aria-hidden="true" /> Worldwide coverage</span>
+            <HeaderControls
+              isDark={darkMode}
+              onToggleDark={() => setDarkMode((v) => !v)}
+              unit={unit}
+              onToggleUnit={() => setUnit((u) => (u === "C" ? "F" : "C"))}
+            />
+          </div>
+        </header>
 
-        {/* Search */}
-        <div className="w-full">
+        <section className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-medium text-cyan-100/70">Command center</p>
+            <h2 className="mt-1 text-3xl font-semibold tracking-tight sm:text-4xl">Know your sky.</h2>
+          </div>
+          <p className="max-w-sm text-left text-sm leading-6 text-white/55 sm:text-right">Search any city, compare conditions, and track the signals that matter.</p>
+        </section>
+
+        <div className="mb-5 w-full rounded-2xl border border-white/15 bg-white/10 p-2 shadow-xl backdrop-blur-md">
           <SearchBar onSearch={runSearch} loading={loading} />
         </div>
 
